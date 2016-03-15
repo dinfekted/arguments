@@ -49,6 +49,8 @@ func (arguments Arguments) Parse(values []string) (Values, error) {
 		return nil, err
 	}
 
+	arguments.setDefaults(result)
+
 	return result, nil
 }
 
@@ -186,4 +188,19 @@ func (arguments Arguments) checkRequired(values map[string]interface{}) error {
 	}
 
 	return nil
+}
+
+func (arguments Arguments) setDefaults(values map[string]interface{}) {
+	for key, argument := range arguments {
+		if !argument.HasDefault {
+			continue
+		}
+
+		_, ok := values[key]
+		if ok {
+			continue
+		}
+
+		values[key] = argument.Default
+	}
 }

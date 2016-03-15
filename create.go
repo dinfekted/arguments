@@ -71,7 +71,7 @@ func createArgument(value interface{}) (Argument, error) {
 
 	kindType, ok := types[kindString]
 	if !ok {
-		return Argument{}, errors.New("unknown argument type")
+		return Argument{}, errors.New("unknown argument type \"" + kindString + "\"")
 	}
 
 	result.Type = kindType
@@ -90,6 +90,12 @@ func createArgument(value interface{}) (Argument, error) {
 		if !ok {
 			return Argument{}, errors.New("required must be bool")
 		}
+	}
+
+	defaultValue, ok := mapping["default"]
+	if ok {
+		result.Default = defaultValue
+		result.HasDefault = true
 	}
 
 	return result, nil

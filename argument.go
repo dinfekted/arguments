@@ -23,6 +23,8 @@ type Argument struct {
 	Type        ArgumentType
 	Shortcut    string
 	Required    bool
+	Default     interface{}
+	HasDefault  bool
 }
 
 func (argument Argument) parseValue(values []string, pointer int) (
